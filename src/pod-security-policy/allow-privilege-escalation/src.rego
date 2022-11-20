@@ -4,7 +4,8 @@ import data.lib.exempt_container.is_exempt
 
 violation[{"msg": msg, "details": {}}] {
     c := input_containers[_]
-    not is_exempt(c)
+    ns := input.review.object.metadata.namespace
+    not is_exempt(c, ns)
     input_allow_privilege_escalation(c)
     msg := sprintf("Privilege escalation container is not allowed: %v", [c.name])
 }

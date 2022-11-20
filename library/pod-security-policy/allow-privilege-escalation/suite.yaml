@@ -19,3 +19,7 @@ tests:
         object: samples/psp-allow-privilege-escalation-container/disallowed_ephemeral.yaml
         assertions:
           - violations: yes
+      - name: example-whitelisted
+        object: samples/psp-allow-privilege-escalation-container/example_whitelisted.yaml
+        assertions:
+          - violations: no
