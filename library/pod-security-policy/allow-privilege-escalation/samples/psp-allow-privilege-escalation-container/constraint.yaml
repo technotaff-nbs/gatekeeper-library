@@ -7,3 +7,7 @@ spec:
     kinds:
       - apiGroups: [""]
         kinds: ["Pod"]
+  parameters:
+    exemptImages:
+      - namespace: nginx
+        image: orange:*

@@ -11,7 +11,7 @@ test_input_container_privilege_escalation_not_allowed {
     count(results) == 1
 }
 test_input_one_container_with_exemption {
-    input := { "review": input_review_priv, "parameters": {"exemptImages": ["one/*"]}}
+    input := { "review": input_review_priv, "parameters": {"exemptImages": [{"namespace": "allowspace", "image": "one/*"}]}}
     results := violation with input as input
     count(results) == 0
 }
@@ -26,14 +26,19 @@ test_input_container_many_mixed_privilege_escalation_not_allowed {
     count(results) == 3
 }
 test_input_container_many_mixed_privilege_escalation_not_allowed_one_exempted {
-    input := { "review": input_review_many_mixed, "parameters": {"exemptImages": ["one/*"]}}
+    input := { "review": input_review_many_mixed, "parameters": {"exemptImages": [{"namespace": "allowspace", "image": "one/*"}]}}
     results := violation with input as input
     count(results) == 2
 }
 test_input_container_many_mixed_privilege_escalation_not_allowed_all_exempted {
-    input := { "review": input_review_many_mixed, "parameters": {"exemptImages": ["one/*", "two/*", "three/*"]}}
+    input := { "review": input_review_many_mixed, "parameters": {"exemptImages": [{"namespace": "allowspace", "image": "one/*"}, {"namespace": "allowspace", "image": "two/*"}, {"namespace": "allowspace", "image": "three/*"}]}}
     results := violation with input as input
     count(results) == 0
+}
+test_input_container_many_mixed_privilege_escalation_not_allowed_all_exempted_wrong_namespace {
+    input := { "review": input_review_many_mixed, "parameters": {"exemptImages": [{"namespace": "blockspace", "image": "one/*"}, {"namespace": "blockspace", "image": "two/*"}, {"namespace": "blockspace", "image": "three/*"}]}}
+    results := violation with input as input
+    count(results) == 3
 }
 test_input_container_many_mixed_privilege_escalation_not_allowed_two {
     input := { "review": input_review_many_mixed_two}
@@ -55,7 +60,8 @@ input_review = {
 input_review_priv = {
     "object": {
         "metadata": {
-            "name": "nginx"
+            "name": "nginx",
+            "namespace": "allowspace"
         },
         "spec": {
             "containers": input_containers_one_priv,
@@ -66,7 +72,8 @@ input_review_priv = {
 input_review_many = {
     "object": {
         "metadata": {
-            "name": "nginx"
+            "name": "nginx",
+            "namespace": "allowspace"
         },
         "spec": {
             "containers": input_containers_many,
@@ -78,7 +85,8 @@ input_review_many = {
 input_review_many_mixed = {
     "object": {
         "metadata": {
-            "name": "nginx"
+            "name": "nginx",
+            "namespace": "allowspace"
         },
         "spec": {
             "containers": input_containers_many,
@@ -90,7 +98,8 @@ input_review_many_mixed = {
 input_review_many_mixed_two = {
     "object": {
         "metadata": {
-            "name": "nginx"
+            "name": "nginx",
+            "namespace": "blackspace"
         },
         "spec": {
             "containers": input_containers_many_mixed,
