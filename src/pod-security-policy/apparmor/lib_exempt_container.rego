@@ -5,7 +5,7 @@ is_exempt(container, namespace) {
     img := container.image
     exemption := exempt_images[_]
     _matches_exemption(img, exemption.image)
-    namespace == exemption.namespace
+    _matches_exemption(namespace, exemption.namespace)
 }
 
 _matches_exemption(img, image) {

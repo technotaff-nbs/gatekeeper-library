@@ -169,7 +169,7 @@ input_parameters_exempt_container_allowspace = {
     "allowedProfiles": [],
     "exemptImages": [
             {
-                "namespace": "allowspace",
+                "namespace": "allow*",
                 "image": "nginx:*"
             }
         ]

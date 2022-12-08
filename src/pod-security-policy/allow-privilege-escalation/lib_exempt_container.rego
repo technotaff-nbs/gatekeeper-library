@@ -4,8 +4,8 @@ is_exempt(container, namespace) {
     exempt_images := object.get(object.get(input, "parameters", {}), "exemptImages", [])
     img := container.image
     exemption := exempt_images[_]
-    namespace == exemption.namespace
     _matches_exemption(img, exemption.image)
+    _matches_exemption(namespace, exemption.namespace)
 }
 
 _matches_exemption(img, image) {
