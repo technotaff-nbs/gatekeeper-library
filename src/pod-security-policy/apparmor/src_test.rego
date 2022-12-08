@@ -7,7 +7,13 @@ test_input_apparmor_allowed_empty {
 }
 
 test_input_apparmor_allowed_empty_but_exempted {
-    input := { "review": input_review_container, "parameters": input_parameters_exempt_container}
+    input := { "review": input_review_container, "parameters": input_parameters_exempt_container_allowspace}
+    results := violation with input as input
+    count(results) == 0
+}
+
+test_input_apparmor_allowed_empty_but_exempted_wrong_ns {
+    input := { "review": input_review_container, "parameters": input_parameters_exempt_container_blockspace}
     results := violation with input as input
     count(results) == 1
 }
@@ -70,6 +76,7 @@ input_review_container = {
     "object": {
         "metadata": {
             "name": "nginx",
+            "namespace": "allowspace",
             "annotations": {
                 "container.apparmor.security.beta.kubernetes.io/nginx": "runtime/default"
             }
@@ -77,7 +84,7 @@ input_review_container = {
         "spec": {
             "containers": [{
                 "name": "nginx",
-                "image": "nginx"
+                "image": "nginx:v1.3.0"
             }]
         }
     }
@@ -87,7 +94,8 @@ input_review_container = {
 input_review_no_annotation = {
     "object": {
         "metadata": {
-            "name": "nginx"
+            "name": "nginx",
+            "namespace": "test",
         },
         "spec": {
             "containers": [{
@@ -102,6 +110,7 @@ input_review_containers = {
     "object": {
         "metadata": {
             "name": "nginx",
+            "namespace": "test",
             "annotations": {
                 "container.apparmor.security.beta.kubernetes.io/nginx": "runtime/default",
                 "container.apparmor.security.beta.kubernetes.io/nginx2": "runtime/default"
@@ -117,6 +126,7 @@ input_review_containers_missing_annotation = {
     "object": {
         "metadata": {
             "name": "nginx",
+            "namespace": "test",
             "annotations": {
                 "container.apparmor.security.beta.kubernetes.io/nginx": "runtime/default"
             }
@@ -131,6 +141,7 @@ input_review_containers_mixed = {
     "object": {
         "metadata": {
             "name": "nginx",
+            "namespace": "test",
             "annotations": {
                 "container.apparmor.security.beta.kubernetes.io/nginx": "runtime/default",
                 "container.apparmor.security.beta.kubernetes.io/nginx2": "unconfined"
@@ -154,9 +165,24 @@ input_parameters_empty = {
     "allowedProfiles": []
 }
 
-input_parameters_exempt_container = {
+input_parameters_exempt_container_allowspace = {
     "allowedProfiles": [],
-    "exemptImages": "nginx"
+    "exemptImages": [
+            {
+                "namespace": "allowspace",
+                "image": "nginx:*"
+            }
+        ]
+}
+
+input_parameters_exempt_container_blockspace = {
+    "allowedProfiles": [],
+    "exemptImages": [
+            {
+                "namespace": "blockspace",
+                "image": "nginx:*"
+            }
+        ]
 }
 
 input_parameters_in_list = {

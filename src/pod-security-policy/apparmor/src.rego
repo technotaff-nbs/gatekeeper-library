@@ -5,7 +5,8 @@ import data.lib.exempt_container.is_exempt
 violation[{"msg": msg, "details": {}}] {
     metadata := input.review.object.metadata
     container := input_containers[_]
-    not is_exempt(container)
+    ns := input.review.object.metadata.namespace
+    not is_exempt(container, ns)
     not input_apparmor_allowed(container, metadata)
     msg := sprintf("AppArmor profile is not allowed, pod: %v, container: %v. Allowed profiles: %v", [input.review.object.metadata.name, container.name, input.parameters.allowedProfiles])
 }
