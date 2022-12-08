@@ -12,6 +12,12 @@ test_input_apparmor_allowed_empty_but_exempted {
     count(results) == 0
 }
 
+test_input_apparmor_allowed_empty_but_exempted_wild_namespace {
+    input := { "review": input_review_container, "parameters": input_parameters_exempt_container_wildcardspace}
+    results := violation with input as input
+    count(results) == 0
+}
+
 test_input_apparmor_allowed_empty_but_exempted_wrong_ns {
     input := { "review": input_review_container, "parameters": input_parameters_exempt_container_blockspace}
     results := violation with input as input
@@ -166,6 +172,16 @@ input_parameters_empty = {
 }
 
 input_parameters_exempt_container_allowspace = {
+    "allowedProfiles": [],
+    "exemptImages": [
+            {
+                "namespace": "allowspace",
+                "image": "nginx:*"
+            }
+        ]
+}
+
+input_parameters_exempt_container_wildcardspace = {
     "allowedProfiles": [],
     "exemptImages": [
             {
