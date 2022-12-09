@@ -32,6 +32,8 @@ spec:
                 It is recommended that users use the fully-qualified Docker image name (e.g. start with a domain name)
                 in order to avoid unexpectedly exempting images from an untrusted repository.
 
+                Namespaces are set per-image and can also be wildarded, e.g. dev-app-*
+
                 Each entry in exemptImages must have 2 entries:
                    namespace: <the namespace in which the image is allowed>
                    image: <as above, the image specification>
