@@ -467,6 +467,7 @@ get_object(annotations, podcontext, containers, initcontainers) = {"object": {
     "metadata": {
         "name": "nginx",
         "annotations": annotations,
+        "namespace": "test",
     },
     "spec": {
         "containers": containers,
@@ -609,7 +610,7 @@ input_parameters_not_in_list = {"allowedProfiles": [
 ]}
 
 input_parameters_exempt = {
-    "exemptImages": ["nginx"],
+    "exemptImages": [{"image": "nginx", "namespace": "test"}],
     "allowedProfiles": ["unconfined"],
 }
 

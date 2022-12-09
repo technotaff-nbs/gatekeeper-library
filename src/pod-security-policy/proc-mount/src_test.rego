@@ -64,7 +64,8 @@ test_input_container_many_mixed_proc_mount_allowed_two {
 input_review = {
     "object": {
         "metadata": {
-            "name": "nginx"
+            "name": "nginx",
+            "namespace": "test"
         },
         "spec": {
             "containers": input_containers_one
@@ -75,7 +76,8 @@ input_review = {
 input_review_unmasked = {
     "object": {
         "metadata": {
-            "name": "nginx"
+            "name": "nginx",
+            "namespace": "test"
         },
         "spec": {
             "containers": input_containers_one_unmasked
@@ -86,7 +88,8 @@ input_review_unmasked = {
 input_review_many = {
     "object": {
         "metadata": {
-            "name": "nginx"
+            "name": "nginx",
+            "namespace": "test"
         },
         "spec": {
             "containers": input_containers_many,
@@ -98,7 +101,8 @@ input_review_many = {
 input_review_many_mixed = {
     "object": {
         "metadata": {
-            "name": "nginx"
+            "name": "nginx",
+            "namespace": "test"
         },
         "spec": {
             "containers": input_containers_many,
@@ -110,7 +114,8 @@ input_review_many_mixed = {
 input_review_many_mixed_two = {
     "object": {
         "metadata": {
-            "name": "nginx"
+            "name": "nginx",
+            "namespace": "test"
         },
         "spec": {
             "containers": input_containers_many_mixed,
@@ -186,6 +191,6 @@ input_parameters_unmasked = {
 }
 
 input_parameters_exempt = {
-     "exemptImages": ["nginx"],
+     "exemptImages": [{"image":"nginx", "namespace": "test"}],
      "procMount": "Default"
 }

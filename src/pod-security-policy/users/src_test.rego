@@ -114,7 +114,7 @@ test_user_one_container_run_in_range_user_between_ranges {
   count(results) == 1
 }
 test_user_one_container_run_in_range_user_between_ranges_but_exempt {
-  input := { "review": review(null, [ctr("cont1", runAsUser(200))], null), "parameters": object.union(user_mustrunas_two_ranges, {"exemptImages": ["nginx"]}) }
+  input := { "review": review(null, [ctr("cont1", runAsUser(200))], null), "parameters": object.union(user_mustrunas_two_ranges, {"exemptImages": [{"image": "nginx", "namespace": "test"}]}) }
   results := violation with input as input
   count(results) == 0
 }
@@ -826,7 +826,8 @@ review(context, containers, initContainers) = out {
       "kind": "Pod"
     },
     "metadata": {
-      "name": "test-pod"
+      "name": "test-pod",
+      "namespace": "test"
     },
     "object": {
       "spec": object.union(object.union(sec_obj, cont_obj), init_obj)

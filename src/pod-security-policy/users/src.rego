@@ -6,7 +6,8 @@ violation[{"msg": msg}] {
   fields := ["runAsUser", "runAsGroup", "supplementalGroups", "fsGroup"]
   field := fields[_]
   container := input_containers[_]
-  not is_exempt(container)
+  ns := input.review.metadata.namespace
+  not is_exempt(container, ns)
   msg := get_type_violation(field, container)
 }
 

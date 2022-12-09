@@ -137,7 +137,8 @@ test_input_seLinux_options_many_not_allowed_not_in_list_double_seccontext {
 input_review = {
     "object": {
         "metadata": {
-            "name": "nginx"
+            "name": "nginx",
+            "namespace": "test"
         },
         "spec": {
             "containers": input_containers_one,
@@ -147,7 +148,8 @@ input_review = {
 input_review = {
     "object": {
         "metadata": {
-            "name": "nginx"
+            "name": "nginx",
+            "namespace": "test"
         },
         "spec": {
             "containers": input_containers_one,
@@ -158,7 +160,8 @@ input_review = {
 input_review_two = {
     "object": {
         "metadata": {
-            "name": "nginx"
+            "name": "nginx",
+            "namespace": "test"
         },
         "spec": {
             "securityContext": input_seLinuxOptions
@@ -169,7 +172,8 @@ input_review_two = {
 input_review_two_subset = {
     "object": {
         "metadata": {
-            "name": "nginx"
+            "name": "nginx",
+            "namespace": "test"
         },
         "spec": {
             "securityContext": input_seLinuxOptions_subset
@@ -180,7 +184,8 @@ input_review_two_subset = {
 input_review_no_security_context = {
     "object": {
         "metadata": {
-            "name": "nginx"
+            "name": "nginx",
+            "namespace": "test"
         },
         "spec": {}
     }
@@ -189,7 +194,8 @@ input_review_no_security_context = {
 input_review_many = {
     "object": {
         "metadata": {
-            "name": "nginx"
+            "name": "nginx",
+            "namespace": "test"
         },
         "spec": {
             "containers": input_containers_many,
@@ -200,7 +206,8 @@ input_review_many = {
 input_review_many_double_seccontext = {
     "object": {
         "metadata": {
-            "name": "nginx"
+            "name": "nginx",
+            "namespace": "test"
         },
         "spec": {
             "securityContext": input_seLinuxOptions,
@@ -301,7 +308,7 @@ input_parameters_not_in_list = {
 }
 
 input_parameters_exempt = {
-    "exemptImages": ["nginx"],
+    "exemptImages": [{"image":"nginx", "namespace": "test"}],
     "allowedSELinuxOptions": [{
         "level": "s1:c234,c567",
         "role": "sysadm_r",

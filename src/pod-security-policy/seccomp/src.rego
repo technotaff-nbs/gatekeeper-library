@@ -22,7 +22,8 @@ violation[{"msg": msg}] {
     not input_wildcard_allowed_profiles
     allowed_profiles := get_allowed_profiles
     container := input_containers[name]
-    not is_exempt(container)
+    ns := input.review.object.metadata.namespace
+    not is_exempt(container, ns)
     result := get_profile(container)
     not allowed_profile(result.profile, result.file, allowed_profiles)
     msg := get_message(result.profile, result.file, name, result.location, allowed_profiles)

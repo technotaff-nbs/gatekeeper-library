@@ -4,7 +4,8 @@ import data.lib.exempt_container.is_exempt
 
 violation[{"msg": msg, "details": {}}] {
     c := input_containers[_]
-    not is_exempt(c)
+    ns := input.review.object.metadata.namespace
+    not is_exempt(c, ns)
     allowedProcMount := get_allowed_proc_mount(input)
     not input_proc_mount_type_allowed(allowedProcMount, c)
     msg := sprintf("ProcMount type is not allowed, container: %v. Allowed procMount types: %v", [c.name, allowedProcMount])

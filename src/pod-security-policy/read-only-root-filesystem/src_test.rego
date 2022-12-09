@@ -21,7 +21,7 @@ test_input_container_many_mixed_readonlyrootfilesystem_not_allowed_two {
     count(results) == 3
 }
 test_input_container_many_mixed_readonlyrootfilesystem_not_allowed_two_but_exempt {
-    input := { "review": input_review_many_mixed_two, "parameters": {"exemptImages": ["nginx"]} }
+    input := { "review": input_review_many_mixed_two, "parameters": {"exemptImages": [{"image": "nginx", "namespace": "test"}]} }
     results := violation with input as input
     count(results) == 0
 }
@@ -29,7 +29,8 @@ test_input_container_many_mixed_readonlyrootfilesystem_not_allowed_two_but_exemp
 input_review = {
     "object": {
         "metadata": {
-            "name": "nginx"
+            "name": "nginx",
+            "namespace": "test"
         },
         "spec": {
             "containers": input_containers_one
@@ -40,7 +41,8 @@ input_review = {
 input_review_ro = {
     "object": {
         "metadata": {
-            "name": "nginx"
+            "name": "nginx",
+            "namespace": "test"
         },
         "spec": {
             "containers": input_containers_one_ro
@@ -51,7 +53,8 @@ input_review_ro = {
 input_review_many_mixed = {
     "object": {
         "metadata": {
-            "name": "nginx"
+            "name": "nginx",
+            "namespace": "test"
         },
         "spec": {
             "containers": input_containers_many,
@@ -63,7 +66,8 @@ input_review_many_mixed = {
 input_review_many_mixed_two = {
     "object": {
         "metadata": {
-            "name": "nginx"
+            "name": "nginx",
+            "namespace": "test"
         },
         "spec": {
             "containers": input_containers_many_mixed,
