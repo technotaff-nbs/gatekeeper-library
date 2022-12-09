@@ -45,7 +45,8 @@ test_input_with_hostnetwork_container_ports_not_allowed_but_exempt {
 input_review = {
     "object": {
         "metadata": {
-            "name": "nginx"
+            "name": "nginx",
+            "namespace": "test"
         },
         "spec": {
             "containers": input_containers_one
@@ -56,7 +57,8 @@ input_review = {
 input_review_no_hostnetwork_allowed_ports = {
     "object": {
         "metadata": {
-            "name": "nginx"
+            "name": "nginx",
+            "namespace": "test"
         },
         "spec": {
             "containers": input_containers_one_port
@@ -67,7 +69,8 @@ input_review_no_hostnetwork_allowed_ports = {
 input_review_no_hostnetwork_container_ports_outofrange = {
     "object": {
         "metadata": {
-            "name": "nginx"
+            "name": "nginx",
+            "namespace": "test"
         },
         "spec": {
             "containers": input_containers_one_port_outofrange
@@ -78,7 +81,8 @@ input_review_no_hostnetwork_container_ports_outofrange = {
 input_review_with_hostnetwork_no_port = {
     "object": {
         "metadata": {
-            "name": "nginx"
+            "name": "nginx",
+            "namespace": "test"
         },
         "spec": {
             "hostNetwork": true,
@@ -91,7 +95,8 @@ input_review_with_hostnetwork_no_port = {
 input_review_no_hostnetwork_explicit = {
     "object": {
         "metadata": {
-            "name": "nginx"
+            "name": "nginx",
+            "namespace": "test"
         },
         "spec": {
             "hostNetwork": false,
@@ -103,7 +108,8 @@ input_review_no_hostnetwork_explicit = {
 input_review_with_hostnetwork_port_outofrange = {
     "object": {
         "metadata": {
-            "name": "nginx"
+            "name": "nginx",
+            "namespace": "test"
         },
         "spec": {
             "hostNetwork": true,
@@ -167,7 +173,7 @@ input_parameters_ports_no_hostnetwork = {
 }
 
 input_parameters_exempt = {
-    "exemptImages": ["nginx"], 
+    "exemptImages": [{"image": "nginx", "namespace": "test"}], 
     "hostNetwork": true,
     "min": 80,
     "max": 9000

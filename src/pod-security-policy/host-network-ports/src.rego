@@ -24,15 +24,18 @@ input_share_hostnetwork(o) {
 
 input_containers[c] {
     c := input.review.object.spec.containers[_]
-    not is_exempt(c)
+    ns := input.review.object.metadata.namespace
+    not is_exempt(c, ns)
 }
 
 input_containers[c] {
     c := input.review.object.spec.initContainers[_]
-    not is_exempt(c)
+    ns := input.review.object.metadata.namespace
+    not is_exempt(c, ns)
 }
 
 input_containers[c] {
     c := input.review.object.spec.ephemeralContainers[_]
-    not is_exempt(c)
+    ns := input.review.object.metadata.namespace
+    not is_exempt(c, ns)
 }

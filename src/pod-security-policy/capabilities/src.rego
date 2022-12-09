@@ -6,7 +6,6 @@ violation[{"msg": msg}] {
   container := input.review.object.spec.containers[_]
   ns := input.review.object.metadata.namespace
   not is_exempt(container, ns)
-  print(container, ns)
   has_disallowed_capabilities(container)
   msg := sprintf("container <%v> has a disallowed capability. Allowed capabilities are %v", [container.name, get_default(input.parameters, "allowedCapabilities", "NONE")])
 }
