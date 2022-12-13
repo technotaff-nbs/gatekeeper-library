@@ -831,7 +831,6 @@ review(context, containers, initContainers) = out {
       "spec": object.union(object.union(sec_obj, cont_obj), init_obj)
     }
   }
-  # print(out)
 }
 
 ctr(name, context) = out {
