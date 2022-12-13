@@ -6,8 +6,8 @@ violation[{"msg": msg}] {
   fields := ["runAsUser", "runAsGroup", "supplementalGroups", "fsGroup"]
   field := fields[_]
   container := input_containers[_]
-  ns := input.review.metadata.namespace
-  not is_exempt(container, ns)
+  ns := input.review.object.metadata.namespace
+  not is_exempt(container, ns)  
   msg := get_type_violation(field, container)
 }
 
@@ -93,7 +93,7 @@ get_field_value(field, container, review) = out {
 # If no container level exists, use pod level
 get_field_value(field, container, review) = out {
   not has_seccontext_field(field, container)
-  review.kind.kind == "Pod"
+  review.object.kind == "Pod"
   pod_value := get_seccontext_field(field, review.object.spec)
   out := pod_value
 }

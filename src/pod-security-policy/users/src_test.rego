@@ -822,17 +822,16 @@ review(context, containers, initContainers) = out {
   cont_obj := obj_if_exists("containers", containers)
   init_obj := obj_if_exists("initContainers", initContainers)
   out = {
-    "kind": {
-      "kind": "Pod"
-    },
-    "metadata": {
-      "name": "test-pod",
-      "namespace": "test"
-    },
     "object": {
+      "kind": "Pod",
+      "metadata": {
+        "name": "test-pod",
+        "namespace": "test"
+      },
       "spec": object.union(object.union(sec_obj, cont_obj), init_obj)
     }
   }
+  # print(out)
 }
 
 ctr(name, context) = out {

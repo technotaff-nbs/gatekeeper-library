@@ -32,6 +32,8 @@ spec:
                 It is recommended that users use the fully-qualified Docker image name (e.g. start with a domain name)
                 in order to avoid unexpectedly exempting images from an untrusted repository.
 
+                Namespaces are set per-image and can also be wildcarded, e.g. dev-app-*
+
                 Each entry in exemptImages must have 2 entries:
                    namespace: <the namespace in which the image is allowed>
                    image: <as above, the image specification>
@@ -80,17 +82,24 @@ spec:
               exempt_images := object.get(object.get(input, "parameters", {}), "exemptImages", [])
               img := container.image
               exemption := exempt_images[_]
-              namespace == exemption.namespace
+              # empty namespace is ok, empty image is not
+              exempt_namespace := object.get(exemption, "namespace", "")
+              not exemption.image == ""
               _matches_exemption(img, exemption.image)
+              _matches_exemption(namespace, exempt_namespace)
           }
 
-          _matches_exemption(img, image) {
-              not endswith(image, "*")
-              image == img
+          _matches_exemption(target, exemption) {
+              exemption == ""
           }
 
-          _matches_exemption(img, image) {
-              endswith(image, "*")
-              prefix := trim_suffix(image, "*")
-              startswith(img, prefix)
+          _matches_exemption(target, exemption) {
+              not endswith(exemption, "*")
+              exemption == target
+          }
+
+          _matches_exemption(target, exemption) {
+              endswith(exemption, "*")
+              prefix := trim_suffix(exemption, "*")
+              startswith(target, prefix)
           }

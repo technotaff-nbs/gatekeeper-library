@@ -11,17 +11,17 @@ is_exempt(container, namespace) {
     _matches_exemption(namespace, exempt_namespace)
 }
 
-_matches_exemption(target, excemption) {
-    excemption == ""
+_matches_exemption(target, exemption) {
+    exemption == ""
 }
 
-_matches_exemption(target, excemption) {
-    not endswith(excemption, "*")
-    excemption == target
+_matches_exemption(target, exemption) {
+    not endswith(exemption, "*")
+    exemption == target
 }
 
-_matches_exemption(target, excemption) {
-    endswith(excemption, "*")
-    prefix := trim_suffix(excemption, "*")
+_matches_exemption(target, exemption) {
+    endswith(exemption, "*")
+    prefix := trim_suffix(exemption, "*")
     startswith(target, prefix)
 }

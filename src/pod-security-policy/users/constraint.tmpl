@@ -24,7 +24,7 @@ spec:
             `fsGroup` fields in a PodSecurityPolicy. For more information, see
             https://kubernetes.io/docs/concepts/policy/pod-security-policy/#users-and-groups
           properties:
-             exemptImages:
+            exemptImages:
               description: >-
                 Any container that uses an image that matches an entry in this list will be excluded
                 from enforcement. Prefix-matching can be signified with `*`. For example: `my-image-*`.
@@ -32,7 +32,7 @@ spec:
                 It is recommended that users use the fully-qualified Docker image name (e.g. start with a domain name)
                 in order to avoid unexpectedly exempting images from an untrusted repository.
 
-                Namespaces are set per-image and can also be wildarded, e.g. dev-app-*
+                Namespaces are set per-image and can also be wildcarded, e.g. dev-app-*
 
                 Each entry in exemptImages must have 2 entries:
                    namespace: <the namespace in which the image is allowed>

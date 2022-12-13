@@ -32,9 +32,15 @@ spec:
 
                 It is recommended that users use the fully-qualified Docker image name (e.g. start with a domain name)
                 in order to avoid unexpectedly exempting images from an untrusted repository.
+
+                Namespaces are set per-image and can also be wildcarded, e.g. dev-app-*
+
+                Each entry in exemptImages must have 2 entries:
+                   namespace: <the namespace in which the image is allowed>
+                   image: <as above, the image specification>
               type: array
               items:
-                type: string
+                type: object
   targets:
     - target: admission.k8s.gatekeeper.sh
       rego: |
@@ -44,7 +50,8 @@ spec:
 
         violation[{"msg": msg, "details": {}}] {
             c := input_containers[_]
-            not is_exempt(c)
+            ns := input.review.object.metadata.namespace
+            not is_exempt(c, ns)
             input_read_only_root_fs(c)
             msg := sprintf("only read-only root filesystem container is allowed: %v", [c.name])
         }
@@ -74,20 +81,28 @@ spec:
         - |
           package lib.exempt_container
 
-          is_exempt(container) {
+          is_exempt(container, namespace) {
               exempt_images := object.get(object.get(input, "parameters", {}), "exemptImages", [])
               img := container.image
               exemption := exempt_images[_]
-              _matches_exemption(img, exemption)
+              # empty namespace is ok, empty image is not
+              exempt_namespace := object.get(exemption, "namespace", "")
+              not exemption.image == ""
+              _matches_exemption(img, exemption.image)
+              _matches_exemption(namespace, exempt_namespace)
           }
 
-          _matches_exemption(img, exemption) {
+          _matches_exemption(target, exemption) {
+              exemption == ""
+          }
+
+          _matches_exemption(target, exemption) {
               not endswith(exemption, "*")
-              exemption == img
+              exemption == target
           }
 
-          _matches_exemption(img, exemption) {
+          _matches_exemption(target, exemption) {
               endswith(exemption, "*")
               prefix := trim_suffix(exemption, "*")
-              startswith(img, prefix)
+              startswith(target, prefix)
           }
