@@ -40,6 +40,14 @@ spec:
               type: array
               items:
                 type: object
+                properties:
+                  namespace:
+                      type: string
+                      nullable: true
+                  image:
+                      type: string
+                      nullable: false
+
   targets:
     - target: admission.k8s.gatekeeper.sh
       rego: |

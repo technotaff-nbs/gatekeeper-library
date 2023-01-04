@@ -41,6 +41,11 @@ spec:
               type: array
               items:
                 type: object
+                properties:
+                  namespace:
+                      type: string
+                  image:
+                      type: string
             allowedSELinuxOptions:
               type: array
               description: "An allow-list of SELinux options configurations."

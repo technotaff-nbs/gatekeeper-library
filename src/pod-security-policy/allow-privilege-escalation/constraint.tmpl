@@ -41,10 +41,10 @@ spec:
               items:
                 type: object
                 properties:
-                  level:
-                      type: namespace
-                  role:
-                      type: image
+                  namespace:
+                      type: string
+                  image:
+                      type: string
 
   targets:
     - target: admission.k8s.gatekeeper.sh

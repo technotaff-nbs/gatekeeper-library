@@ -41,6 +41,11 @@ spec:
               type: array
               items:
                 type: object
+                properties:
+                  namespace:
+                      type: string
+                  image:
+                      type: string
             hostNetwork:
               description: "Determines if the policy allows the use of HostNetwork in the pod spec."
               type: boolean
