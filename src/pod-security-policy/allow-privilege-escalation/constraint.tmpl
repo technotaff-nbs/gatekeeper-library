@@ -40,6 +40,12 @@ spec:
               type: array
               items:
                 type: object
+                properties:
+                  level:
+                      type: namespace
+                  role:
+                      type: image
+
   targets:
     - target: admission.k8s.gatekeeper.sh
       rego: |
