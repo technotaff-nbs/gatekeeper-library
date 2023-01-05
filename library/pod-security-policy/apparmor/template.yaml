@@ -41,6 +41,11 @@ spec:
               type: array
               items:
                 type: object
+                properties:
+                  namespace:
+                      type: string
+                  image:
+                      type: string
             allowedProfiles:
               description: "An array of AppArmor profiles. Examples: `runtime/default`, `unconfined`."
               type: array

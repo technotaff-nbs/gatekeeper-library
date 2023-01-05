@@ -40,6 +40,11 @@ spec:
               type: array
               items:
                 type: object
+                properties:
+                  namespace:
+                      type: string
+                  image:
+                      type: string
             runAsUser:
               type: object
               description: "Controls which user ID values are allowed in a Pod or container-level SecurityContext."

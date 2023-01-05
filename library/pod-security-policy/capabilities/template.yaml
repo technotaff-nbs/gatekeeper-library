@@ -41,6 +41,11 @@ spec:
               type: array
               items:
                 type: object
+                properties:
+                  namespace:
+                      type: string
+                  image:
+                      type: string
             allowedCapabilities:
               type: array
               description: "A list of Linux capabilities that can be added to a container."
