@@ -7,7 +7,7 @@ violation[{"msg": msg, "details": {}}] {
     ns := input.review.object.metadata.namespace
     not is_exempt(c, ns)
     input_allow_privilege_escalation(c)
-    msg := sprintf("Privilege escalation container image is not allowed: '%v' in namespace '%v'", [c.image, ns])
+    msg := sprintf("Privilege escalation in container image %v is not allowed in namespace %v", [c.image, ns])
 }
 
 input_allow_privilege_escalation(c) {
