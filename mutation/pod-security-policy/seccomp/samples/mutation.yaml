@@ -6,7 +6,7 @@ spec:
   match:
     scope: Namespaced
     kinds:
-    - apiGroups: ["*"]
+    - apiGroups: [""]
       kinds: ["Pod"]
   location: metadata.annotations."seccomp.security.alpha.kubernetes.io/pod"
   parameters:
